@@ -1,15 +1,50 @@
 class MainLoop {
-	isRunning = false
-	oldStamp = 0
-	Loopers = {}
-	// inQueue = []
+	isRunning = false	// is the main loop running
+	oldStamp = 0			// timestamp to calculate delta
+	Loopers = []			// to hold all the Looper classes
+	fps = 0						// updated every loop to inverse of delta
+	delay = 1000			// minimum delay to call next loop !!!not implemented!!!
 
 	mainLoop(timeStamp) {
-		if (this.isRunning) window.requestAnimationFrame(arg => this.mainLoop(arg))
 		const delta = timeStamp - this.oldStamp
 		this.oldStamp = timeStamp
-		const fps = 1000 / delta
-		console.log(fps)
+		// //
+		if (this.isRunning) {
+			// if (delta > this.delay) {
+				window.requestAnimationFrame(arg => this.mainLoop(arg))
+			// } else {
+				// setTimeout(arg => this.mainLoop(arg), delay - delta)
+			// }
+			// idk what is wrong with this
+		}
+		// console.log(this.fps)
+		this.fps = 1000 / delta
+		this.mainProcess()
+	}
+	mainProcess() {
+		this.processLoop()
+		this.accapetQueue()
+	}
+	accapetQueue() {
+		for (let Looper of this.Loopers) {
+			for (let looperInQueue of Looper.queue) {
+				looperInQueue.queueDone()
+			}
+		}
+		this.clearQueue()
+	}
+	clearQueue() {
+		for (let Looper of this.Loopers) {
+			Looper.queue = []
+		}
+	}
+	processLoop() {
+		for (let Looper of this.Loopers) {
+			let loopers = Looper.objects
+			for (let looper of loopers) {
+				looper.mainProcess()
+			}
+		}
 	}
 	start() {
 		this.isRunning = true
@@ -32,48 +67,46 @@ class MainLoop {
 main = new MainLoop()
 
 class Looper {
-	process() {}
+	static Loop = main //default loop
+	static isReady = false
+	static objects = []
+	static queue = []
 	constructor() {
 		this.checkReady()
-		this.addToList()
-		// this.addToQueue()
+		this.appendToQueue()
+		this.idx = arguments[0]
 	}
-	static Loop = main
-	static objects = []
-	static isReady = false
-	ready() {
-		this.addToLoop()
+	static ready() {
+		this.addToLoopers()
+	}
+	static addToLoopers() {
+		this.Loop.Loopers.push(this)
 	}
 	checkReady() {
 		if (!this.constructor.isReady) {
-			this.ready()
+			this.constructor.ready()
+			this.constructor.isReady = true
 		}
 	}
-	addToList() {
+	appendToQueue() {
+		this.constructor.queue.push(this)
+	}
+	queueDone() {
+		this.addToObjects()
+	}
+	addToObjects() {
 		this.constructor.objects.push(this)
 	}
-	addToLoop() {
-		this.constructor.Loop.Loopers[this.constructor.name] = []
-		this.constructor.objects = this.constructor.Loop.Loopers[
-			this.constructor.name
-		]
+	mainProcess() {
+		this.process()
 	}
-	// it will be called in the ready() anyway. we don't need to check again
-	// addToLoop(){
-	// 	if (!this.constructor.Loop.Loopers.hasOwnProperty(this.constructor.name)) {
-	// 		this.constructor.Loop.Loopers[this.constructor.name] = []
-	// 		this.constructor.objects = this.constructor.Loop.Loopers[
-	// 			this.constructor.name
-	// 		]
-	// 	}
-	// }
-
-	// this would cut .constructor in some function, but isn't necessary.
-	// get Loop() {
-	// 	return this.constructor.Loop
-	// }
+	process() {
+		// 
+	}
 }
-
+// new Looper(4)
+// new Looper(6)
+new Looper(8)
 // console.log(MainLoop.Loopers)
 
 main.initialStart()
