@@ -1,47 +1,48 @@
 class MainLoop {
-	static isRunning = false
-	static oldStamp = 0
-	// static inQueue = []
-	static main(timeStamp) {
+	isRunning = false
+	oldStamp = 0
+	Loopers = {}
+	// inQueue = []
 
-		if (MainLoop.isRunning) window.requestAnimationFrame(MainLoop.main)
-		const delta = timeStamp - MainLoop.oldStamp
-		MainLoop.oldStamp = timeStamp
+	mainLoop(timeStamp) {
+		if (this.isRunning) window.requestAnimationFrame(arg => this.mainLoop(arg))
+		const delta = timeStamp - this.oldStamp
+		this.oldStamp = timeStamp
 		const fps = 1000 / delta
 		console.log(fps)
 	}
-	static start() {
+	start() {
 		this.isRunning = true
-		window.requestAnimationFrame(MainLoop.main)
+		window.requestAnimationFrame(arg => this.mainLoop(arg))
 	}
-	static stop() {
+	initialStart() {
+		this.isRunning = true
+		window.requestAnimationFrame(arg => this.initialLoop(arg))
+	}
+	initialLoop(timeStamp) {
+		this.oldStamp = timeStamp
+		this.mainLoop(timeStamp)
+	}
+	stop() {
 		this.isRunning = false
+		//
 	}
-	static initialStart() {
-		this.isRunning = true
-		window.requestAnimationFrame(MainLoop.initialLoop)
-	}
-	static initialLoop(timeStamp) {
-		MainLoop.oldStamp = timeStamp
-		MainLoop.main(timeStamp)
-	}
-	static looperClasses = {}
 }
+
+main = new MainLoop()
 
 class Looper {
 	process() {}
 	constructor() {
 		this.checkReady()
 		this.addToList()
+		// this.addToQueue()
 	}
-	static listInMainLoop = null
+	static Loop = main
+	static objects = []
 	static isReady = false
 	ready() {
-		if (!MainLoop.looperClasses.hasOwnProperty(this.constructor.name)) {
-			MainLoop.looperClasses[this.constructor.name] = []
-			this.constructor.listInMainLoop =
-				MainLoop.looperClasses[this.constructor.name]
-		}
+		this.addToLoop()
 	}
 	checkReady() {
 		if (!this.constructor.isReady) {
@@ -49,10 +50,30 @@ class Looper {
 		}
 	}
 	addToList() {
-		this.constructor.listInMainLoop.push(this)
+		this.constructor.objects.push(this)
 	}
+	addToLoop() {
+		this.constructor.Loop.Loopers[this.constructor.name] = []
+		this.constructor.objects = this.constructor.Loop.Loopers[
+			this.constructor.name
+		]
+	}
+	// it will be called in the ready() anyway. we don't need to check again
+	// addToLoop(){
+	// 	if (!this.constructor.Loop.Loopers.hasOwnProperty(this.constructor.name)) {
+	// 		this.constructor.Loop.Loopers[this.constructor.name] = []
+	// 		this.constructor.objects = this.constructor.Loop.Loopers[
+	// 			this.constructor.name
+	// 		]
+	// 	}
+	// }
+
+	// this would cut .constructor in some function, but isn't necessary.
+	// get Loop() {
+	// 	return this.constructor.Loop
+	// }
 }
 
-// console.log(MainLoop.looperClasses)
+// console.log(MainLoop.Loopers)
 
-MainLoop.initialStart()
+main.initialStart()
