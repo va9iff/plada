@@ -3,11 +3,11 @@ class MainLoop {
 	static oldStamp = 0
 	// static inQueue = []
 	static main(timeStamp) {
-		
+
 		if (MainLoop.isRunning) window.requestAnimationFrame(MainLoop.main)
-		let delta = timeStamp - MainLoop.oldStamp
+		const delta = timeStamp - MainLoop.oldStamp
 		MainLoop.oldStamp = timeStamp
-		let fps = 1000 / delta
+		const fps = 1000 / delta
 		console.log(fps)
 	}
 	static start() {
