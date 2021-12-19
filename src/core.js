@@ -1,9 +1,9 @@
 class MainLoop {
-	isRunning = false	// is the main loop running
-	oldStamp = 0			// timestamp to calculate delta
-	Loopers = []			// to hold all the Looper classes
-	fps = 0						// updated every loop to inverse of delta
-	delay = 1000			// minimum delay to call next loop !!!not implemented!!!
+	isRunning = false // is the main loop running
+	oldStamp = 0 // timestamp to calculate delta
+	Loopers = [] // to hold all the Looper classes
+	fps = 0 // updated every loop to inverse of delta
+	delay = 1000 // minimum delay to call next loop !!!not implemented!!!
 
 	mainLoop(timeStamp) {
 		const delta = timeStamp - this.oldStamp
@@ -11,9 +11,9 @@ class MainLoop {
 		// //
 		if (this.isRunning) {
 			// if (delta > this.delay) {
-				window.requestAnimationFrame(arg => this.mainLoop(arg))
+			window.requestAnimationFrame(arg => this.mainLoop(arg))
 			// } else {
-				// setTimeout(arg => this.mainLoop(arg), delay - delta)
+			// setTimeout(arg => this.mainLoop(arg), delay - delta)
 			// }
 			// idk what is wrong with this
 		}
@@ -23,17 +23,20 @@ class MainLoop {
 	}
 	mainProcess() {
 		this.processLoop()
-		this.accapetQueue()
+		this.accapetQueues()
 	}
-	accapetQueue() {
+	accapetQueues() {
+		this.doQueues()
+		this.clearQueues()
+	}
+	doQueues() {
 		for (let Looper of this.Loopers) {
 			for (let looperInQueue of Looper.queue) {
-				looperInQueue.queueDone()
+				looperInQueue.onQueueDone()
 			}
 		}
-		this.clearQueue()
 	}
-	clearQueue() {
+	clearQueues() {
 		for (let Looper of this.Loopers) {
 			Looper.queue = []
 		}
@@ -91,7 +94,7 @@ class Looper {
 	appendToQueue() {
 		this.constructor.queue.push(this)
 	}
-	queueDone() {
+	onQueueDone() {
 		this.addToObjects()
 	}
 	addToObjects() {
@@ -101,9 +104,25 @@ class Looper {
 		this.process()
 	}
 	process() {
-		// 
+		//
+	}
+	static reAssignments(){
+		// when working with child classes,
+		// we want them to have their own
+		// variants of these properties.
+		// so we reAssign them, as
+		// this.p is child's attr
+		// and =this.p will look
+		// up to the parent.
+		// will go to parent,
+		this.Loop = this.Loop
+		this.isReady = this.isReady
+		this.objects = this.objects
+		this.queue = this.queue
 	}
 }
+
+
 // new Looper(4)
 // new Looper(6)
 new Looper(8)
