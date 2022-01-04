@@ -1,12 +1,14 @@
 class MainLoop {
-	isRunning = false // is the main loop running
+	isRunning = false
 	oldStamp = 0 // timestamp to calculate delta
 	Loopers = [] // to hold all the Looper classes
-	fps = 0 // updated every loop to inverse of delta
 	delay = 1000 // minimum delay to call next loop !!!not implemented!!!
 
+	lastDelta = 0
+	lastFps = 0
 	mainLoop(timeStamp) {
 		const delta = timeStamp - this.oldStamp
+		this.lastDelta = delta
 		this.oldStamp = timeStamp
 		// //
 		if (this.isRunning) {
@@ -17,12 +19,11 @@ class MainLoop {
 			// }
 			// idk what is wrong with this
 		}
-		// console.log(this.fps)
-		this.fps = 1000 / delta
-		this.mainProcess()
+		this.lastFps = 1000 / delta
+		this.loopWrapper()
 	}
-	mainProcess() {
-		this.processLoop()
+	loopWrapper() {
+		this.doLoop()
 		this.accapetQueues()
 	}
 	accapetQueues() {
@@ -31,21 +32,21 @@ class MainLoop {
 	}
 	doQueues() {
 		for (let Looper of this.Loopers) {
-			for (let looperInQueue of Looper.queue) {
+			for (let looperInQueue of Looper.inQueues) {
 				looperInQueue.onQueueDone()
 			}
 		}
 	}
 	clearQueues() {
 		for (let Looper of this.Loopers) {
-			Looper.queue = []
+			Looper.inQueues = []
 		}
 	}
-	processLoop() {
+	doLoop() {
 		for (let Looper of this.Loopers) {
 			let loopers = Looper.objects
 			for (let looper of loopers) {
-				looper.mainProcess()
+				looper.frameWrapper()
 			}
 		}
 	}
@@ -73,7 +74,7 @@ class Looper {
 	static Loop = main //default loop
 	static isReady = false
 	static objects = []
-	static queue = []
+	static inQueues = []
 	constructor() {
 		this.checkReady()
 		this.appendToQueue()
@@ -82,17 +83,20 @@ class Looper {
 	static ready() {
 		this.addToLoopers()
 	}
+	static readyWrapper(){
+		this.ready()
+		this.constructor.isReady = true
+	}
 	static addToLoopers() {
 		this.Loop.Loopers.push(this)
 	}
 	checkReady() {
 		if (!this.constructor.isReady) {
-			this.constructor.ready()
-			this.constructor.isReady = true
+			this.constructor.readyWrapper()
 		}
 	}
 	appendToQueue() {
-		this.constructor.queue.push(this)
+		this.constructor.inQueues.push(this)
 	}
 	onQueueDone() {
 		this.addToObjects()
@@ -100,11 +104,14 @@ class Looper {
 	addToObjects() {
 		this.constructor.objects.push(this)
 	}
-	mainProcess() {
-		this.process()
+	frameWrapper() {
+		// console.log(this.constructor.Loop.lastDelta)
+		const delta = this.constructor.Loop.lastDelta
+		this.frame(delta)
 	}
-	process() {
+	frame(delta) {
 		//
+		console.log(delta)
 	}
 	static reAssignments(){
 		// when working with child classes,
@@ -118,7 +125,8 @@ class Looper {
 		this.Loop = this.Loop
 		this.isReady = this.isReady
 		this.objects = this.objects
-		this.queue = this.queue
+		this.inQueues = this.inQueues
+		// probably do in .onReady()
 	}
 }
 
