@@ -1,4 +1,6 @@
-class MainLoop {
+var totalLoopes = 0
+
+export class MainLoop {
 	isRunning = false
 	oldStamp = 0 // timestamp to calculate delta
 	Loopers = [] // to hold all the Looper classes
@@ -12,12 +14,7 @@ class MainLoop {
 		this.oldStamp = timeStamp
 		// //
 		if (this.isRunning) {
-			// if (delta > this.delay) {
-			window.requestAnimationFrame(arg => this.mainLoop(arg))
-			// } else {
-			// setTimeout(arg => this.mainLoop(arg), delay - delta)
-			// }
-			// idk what is wrong with this
+			window.requestAnimationFrame(tstamp => this.mainLoop(tstamp))
 		}
 		this.lastFps = 1000 / delta
 		this.loopWrapper()
@@ -68,9 +65,9 @@ class MainLoop {
 	}
 }
 
-main = new MainLoop()
+let main = new MainLoop()
 
-class Looper {
+export class Looper {
 	static Loop = main //default loop
 	static isReady = false
 	static objects = []
@@ -79,6 +76,7 @@ class Looper {
 		this.checkReady()
 		this.appendToQueue()
 		this.idx = arguments[0]
+		this.addToObjects()
 	}
 	static ready() {
 		this.addToLoopers()
@@ -99,19 +97,24 @@ class Looper {
 		this.constructor.inQueues.push(this)
 	}
 	onQueueDone() {
-		this.addToObjects()
+		// this.addToObjects()
+		// I don't want to wait 1 loop for this
 	}
 	addToObjects() {
 		this.constructor.objects.push(this)
 	}
+	devFrame(delta){}
 	frameWrapper() {
 		// console.log(this.constructor.Loop.lastDelta)
 		const delta = this.constructor.Loop.lastDelta
+		this.devFrame(delta)
 		this.frame(delta)
 	}
 	frame(delta) {
+		totalLoopes += 1
+		// document.body.innerHTML = totalLoopes
 		//
-		console.log(delta)
+		// console.log(delta)
 	}
 	static reAssignments(){
 		// when working with child classes,
@@ -130,10 +133,8 @@ class Looper {
 	}
 }
 
-
-// new Looper(4)
-// new Looper(6)
-new Looper(8)
-// console.log(MainLoop.Loopers)
-
+	
 main.initialStart()
+
+
+// document.onclick = ()=>document.body.innerHTML = totalLoopes
