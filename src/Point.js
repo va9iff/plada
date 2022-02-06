@@ -3,11 +3,11 @@ import { Looper } from "./core.js"
 
 export class Point extends Looper {
 	origin = null
-	position = new Vector()
-	_absolute = new Vector()
+	// position = new Vector()
+	// _absolute = new Vector()
 
 	constructor(x, y) {
-		super()
+		super(...arguments)
 		this.position = new Vector(x,y)
 	}
 	set absolute(value){
