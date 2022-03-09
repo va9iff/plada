@@ -22,15 +22,7 @@ export class Point extends Looper {
 		}
 		return this._absolute
 	}
-	devFrame(delta) {
-		super.devFrame(delta)
-	}
-	// fixAbsolute() {
-		// let origin = this.origin
-		// this.absolute = this.position.re()
-		// while (origin != null) {
-			// this.absolute.add(origin.position)
-			// origin = origin.origin
-		// }
+	// devFrame(delta) {
+		// super.devFrame(delta)
 	// }
 }

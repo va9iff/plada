@@ -7,8 +7,8 @@ import {Vector} from './Vector.js'
 import {Kinematic} from './Kinematic.js'
 import {Visual} from './Visual.js'
 
-window.k = new Looper()
-k.frame = ()=>console.log('k')
+window.k = new Visual()
+k.frame = ()=>console.log(k.position)
 
 
 window.Point = Point

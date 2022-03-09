@@ -4,9 +4,12 @@ import {Body} from './Body.js'
 export class Kinematic extends Body{
 	// velocity = new Vector(1,1)
 	
+	constructor(){
+		super(...arguments)
+		this.velocity = new Vector()
+	}
 	physicsFix(delta){
 		this.position.add(this.velocity.mul(delta))
-		this.velocity = new Vector()
 	}
 	devFrame(delta) {
 		super.devFrame(delta)
