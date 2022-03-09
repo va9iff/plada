@@ -9,10 +9,10 @@ export class Kinematic extends Body {
 		this.velocity = new Vector()
 	}
 	physicsFix(delta) {
-		this.position.add(this.velocity.mul(delta))
+		this.position.add(this.velocity.re().mul(delta))
 	}
 	devFrame(delta) {
 		super.devFrame(delta)
-		this.physicsFix()
+		this.physicsFix(delta)
 	}
 }
