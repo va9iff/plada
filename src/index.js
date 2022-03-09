@@ -8,7 +8,8 @@ import {Kinematic} from './Kinematic.js'
 import {Visual} from './Visual.js'
 
 window.k = new Visual()
-k.frame = ()=>console.log(k.position)
+k.velocity.x = 3
+// k.frame = ()=>console.log(k.position)
 
 
 window.Point = Point

@@ -70,7 +70,7 @@ export class Looper {
 		this.constructor.checkReady()
 
 		this.appendToQueue()
-		this.idx = arguments[0]
+		// this.idx = arguments[0]
 		this.addToObjects()
 	}
 	static ready() {

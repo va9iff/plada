@@ -1,7 +1,20 @@
 .Looper{
 	position: absolute;
-	background-color: red;
-	width: 20px;
-	height: 20px;
+	text-align: center;
 	border-radius: 50%;
+	background-color: #ff3333;
+
+	/*
+		set by Plada 
+		top, left, width, height
+	*/
+
+	/*
+		optional
+		background-color
+	*/
+}
+
+.Visual{
+	/*background-color: blue;*/
 }
