@@ -1,14 +1,11 @@
-import {Point} from './Point.js'
+import { Point } from "./Point.js"
 
-export class BodyExample extends Point{
-	shapes = [
-		Circle(130,40,30),
-		Rectangle(20,20,10,10)
-	]
-	checkCollisions(){
+export class BodyExample extends Point {
+	shapes = [Circle(130, 40, 30), Rectangle(20, 20, 10, 10)]
+	checkCollisions() {
 		//...
 	}
-	devFrame(delta){
+	devFrame(delta) {
 		super.devFrame(delta)
 	}
 }

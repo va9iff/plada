@@ -1,14 +1,14 @@
-import {Vector} from './Vector.js'
-import {Body} from './Body.js'
+import { Vector } from "./Vector.js"
+import { Body } from "./Body.js"
 
-export class Kinematic extends Body{
+export class Kinematic extends Body {
 	// velocity = new Vector(1,1)
-	
-	constructor(){
+
+	constructor() {
 		super(...arguments)
 		this.velocity = new Vector()
 	}
-	physicsFix(delta){
+	physicsFix(delta) {
 		this.position.add(this.velocity.mul(delta))
 	}
 	devFrame(delta) {

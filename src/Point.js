@@ -8,10 +8,10 @@ export class Point extends Looper {
 
 	constructor(x, y) {
 		super(...arguments)
-		this.position = new Vector(x,y)
+		this.position = new Vector(x, y)
 	}
-	set absolute(value){
-		console.log('you should not set absolute value')
+	set absolute(value) {
+		console.log("you should not set absolute value")
 	}
 	get absolute() {
 		let origin = this.origin
@@ -23,6 +23,6 @@ export class Point extends Looper {
 		return this._absolute
 	}
 	// devFrame(delta) {
-		// super.devFrame(delta)
+	// super.devFrame(delta)
 	// }
 }

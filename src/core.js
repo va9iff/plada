@@ -50,7 +50,7 @@ export class MainLoop {
 	start() {
 		this.isRunning = true
 		window.requestAnimationFrame(tstamp => {
-			this.timeStamp = tstamp  // don't count delta from last. instead from now
+			this.timeStamp = tstamp // don't count delta from last. instead from now
 			this.mainLoop(tstamp)
 		})
 	}
@@ -93,7 +93,7 @@ export class Looper {
 	addToObjects() {
 		this.constructor.objects.push(this)
 	}
-	devFrame(delta){}
+	devFrame(delta) {}
 	frameWrapper() {
 		// console.log(this.constructor.Loop.lastDelta)
 		const delta = this.constructor.Loop.lastDelta
@@ -106,7 +106,7 @@ export class Looper {
 		//
 		// console.log(delta)
 	}
-	static reAssignments(){
+	static reAssignments() {
 		// when working with child classes,
 		// we want them to have their own
 		// variants of these properties.
@@ -123,8 +123,6 @@ export class Looper {
 	}
 }
 
-	
 main.start()
-
 
 // document.onclick = ()=>document.body.innerHTML = totalLoopes
