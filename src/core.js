@@ -17,17 +17,17 @@ export class MainLoop {
 			window.requestAnimationFrame(tstamp => this.mainLoop(tstamp))
 		}
 		this.lastFps = 1000 / delta
-		this.loopWrapper()
+		this.loop()
 	}
-	loopWrapper() {
-		this.doLoop()
+	loop() {
+		this.runLoop()
 		this.accapetQueues()
 	}
 	accapetQueues() {
-		this.doQueues()
+		this.runQueues()
 		this.clearQueues()
 	}
-	doQueues() {
+	runQueues() {
 		for (let Looper of this.Loopers) {
 			for (let looperInQueue of Looper.inQueues) {
 				looperInQueue.onQueueDone()
@@ -39,7 +39,7 @@ export class MainLoop {
 			Looper.inQueues = []
 		}
 	}
-	doLoop() {
+	runLoop() {
 		for (let Looper of this.Loopers) {
 			let loopers = Looper.objects
 			for (let looper of loopers) {
@@ -49,19 +49,13 @@ export class MainLoop {
 	}
 	start() {
 		this.isRunning = true
-		window.requestAnimationFrame(arg => this.mainLoop(arg))
-	}
-	initialStart() {
-		this.isRunning = true
-		window.requestAnimationFrame(arg => this.initialLoop(arg))
-	}
-	initialLoop(timeStamp) {
-		this.oldStamp = timeStamp
-		this.mainLoop(timeStamp)
+		window.requestAnimationFrame(tstamp => {
+			this.timeStamp = tstamp  // don't count delta from last. instead from now
+			this.mainLoop(tstamp)
+		})
 	}
 	stop() {
 		this.isRunning = false
-		//
 	}
 }
 
@@ -73,25 +67,21 @@ export class Looper {
 	static objects = []
 	static inQueues = []
 	constructor() {
-		this.checkReady()
+		this.constructor.checkReady()
+
 		this.appendToQueue()
 		this.idx = arguments[0]
 		this.addToObjects()
 	}
 	static ready() {
-		this.addToLoopers()
-	}
-	static readyWrapper(){
-		this.ready()
+		this.announceAsLooper()
 		this.constructor.isReady = true
 	}
-	static addToLoopers() {
+	static announceAsLooper() {
 		this.Loop.Loopers.push(this)
 	}
-	checkReady() {
-		if (!this.constructor.isReady) {
-			this.constructor.readyWrapper()
-		}
+	static checkReady() {
+		!this.isReady ? this.ready() : null
 	}
 	appendToQueue() {
 		this.constructor.inQueues.push(this)
@@ -134,7 +124,7 @@ export class Looper {
 }
 
 	
-main.initialStart()
+main.start()
 
 
 // document.onclick = ()=>document.body.innerHTML = totalLoopes
