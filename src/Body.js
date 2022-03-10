@@ -9,17 +9,19 @@ export class Body extends Visual {
 	listenings = []
 
 
-	addCollide(body, collideHandler=(self, body)=>{}, id) {
+	addCollision(body, collideHandler=(self, body)=>{}, id=null) {
 		let listening = {
 			body: body,
-			collideHandler: collideHandler
+			collideHandler: collideHandler,
+			id: id
 		}
-		if (id) listening.id=id
-
 		this.listenings.push(listening)
 	}
-	removeCollides(body){
-
+	removeCollision(id){
+		this.listenings = this.listenings.filter(listening=>listening.id!=id)
+	}
+	clearCollisions(){
+		this.listenings = []
 	}
 
 	isColliding(body) {

@@ -9,9 +9,14 @@ import { Visual } from "./Visual.js"
 
 window.k = new Body()
 window.b = new Body()
-b.position.x = 140
-k.velocity.x = 0.03
+let r = new Body()
+r.x = 150
+b.position.x = 100
+k.velocity.x = 0.02
 // k.frame = (d)=> console.log(k.isColliding(b))
-k.addCollide(b,()=>console.log('afsdjf'))
+k.addCollision(b,()=>console.log('afsdjf'),"prr")
+k.addCollision(r,()=>console.log('r'))
+
+k.position.x = -50
 
 window.Point = Point
