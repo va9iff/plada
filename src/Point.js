@@ -15,7 +15,7 @@ export class Point extends Looper {
 	}
 	get absolute() {
 		let origin = this.origin
-		this._absolute = this.position.re()
+		this._absolute = this.position.copy
 		while (origin != null) {
 			this._absolute.add(origin.position)
 			origin = origin.origin

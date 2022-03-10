@@ -10,7 +10,7 @@ export class Body extends Visual {
 
 	collide(body){}
 	isColliding(body){
-		return this.position.vectorTo(body.position).len() < this.radius + body.radius
+		return this.position.vectorTo(body.position).length < this.radius + body.radius
 	}
 	runCollisions(){
 		for(body of this.listenings){
