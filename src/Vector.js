@@ -5,81 +5,93 @@ export class Vector {
     this.y = y || 0;
   }
 
-  // V = a new Vector that is equal to "this"
-  // r = return value
+  // comments above "=>" describes modification
+  // comments below "=>" describes return value
 
-  // reconstructs the new vector from "this"
-  // => Vector
+  // => this
+  // reconstructed new Vector from "this"
   re() {
     return new Vector(this.x, this.y);
   }
 
-  // => Vector
+  // add vec
+  // Vector => this
   add(vec = 0) {
     this.x += vec.x;
     this.y += vec.y;
     return this;
   }
 
-  //r: V subtracted vec
+  // subtrac vec
+  // Vector => this
   sub(vec = 0) {
     this.x -= vec.x;
     this.y -= vec.y;
     return this;
   }
 
-  //r: V multiplied with num
+  // multiply with num
+  // Number => this
   mul(num = 1) {
     this.x *= num;
     this.y *= num;
     return this;
   }
 
-  //r: V devided to num
+  // divide by num
+  // Number => this
   div(num = 1) {
     this.x /= num;
     this.y /= num;
     return this;
   }
 
-  //r: V's length
+  // => Number
+  // length or magnitude
   len() {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
   }
 
-  //r: V's length square
+  // => Number
+  // length square
   lensq() {
     return Math.pow(this.x, 2) + Math.pow(this.y, 2);
   }
 
-  //r: V with length = 1
+  // set length to 1
+  // => this
   norm() {
     if (!this.len()) return this; //0 Vector
     this.div(this.len());
     return this;
   }
 
-  //r: dot product of V and vec
+  // Vector => Number
+  // dot product with vec
   dot(vec) {
     return this.x * vec.x + this.y * vec.y;
   }
 
-  //r: cross product of V and vec
+  // Vector => Number
+  // cross product with vec
   cross(vec) {
     return this.x * vec.y - this.y * vec.x;
   }
 
-  //r: projection V onto vec
+  // Vector => Vector
+  //projection onto vec
   projectTo(vec) {
-    return vec.norm().mul(this.dot(vec.norm()));
+    return vec.re().norm().mul(this.dot(vec.norm()));
   }
 
-  //r: angle of V in radians
+  // => Number
+  // angle in radians
   angle() {
     return Math.atan2(this.y, this.x);
   }
 
-  //r: V with given angle in radians
+  // set angle to given angle in radians
+  // Number => this
   setAngle(angle) {
     let l = this.len();
     let a = angle || this.angle();
@@ -88,7 +100,8 @@ export class Vector {
     return this;
   }
 
-  //r: V rotated by angle
+  // rotate this by given angle
+  // Number => this
   rotate(angle = 0) {
     let l = this.len();
     let a = this.angle();
@@ -97,7 +110,8 @@ export class Vector {
     return this;
   }
 
-  //r: V or V with (x & y) = smallest positive number if V is (0;0)
+  // if length is 0, set it to smallest value possible
+  // => this
   no0() {
     if (V == (0, 0)) {
       this.x = Number.MIN_VALUE;
@@ -106,7 +120,8 @@ export class Vector {
     return this;
   }
 
-  //r: V with minimum length of minlen
+  // set minimum length to minlen
+  // Number => this
   min(minlen) {
     minlen = minlen || this.len();
     if (this.len() < minlen) {
@@ -115,7 +130,8 @@ export class Vector {
     return this;
   }
 
-  //r: V with maximum length of maxlen
+  // set maximum length to minlen
+  // Number => this
   max(maxlen) {
     if (this.len() > maxlen) {
       return this.norm().mul(maxlen);
@@ -123,13 +139,15 @@ export class Vector {
     return this;
   }
 
-  //r: V with len = newLen
+  // set length to newLen
+  // Number => this
   setLen(newLen) {
     this.min(newLen).max(newLen);
     return this;
   }
 
-  //r: V with x clamped to an interval
+  // set X minimum to minX, maximum to maxX
+  // Number, Number => this
   clampX(minX, maxX) {
     if (this.x < minX) {
       this.x = minX;
@@ -139,7 +157,8 @@ export class Vector {
     return this;
   }
 
-  //r: V with y clamped to an interval
+  // set Y minimum to minY, maximum to maxY
+  // Number, Number => this
   clampY(minY, maxY) {
     if (this.y < minY) {
       this.y = minY;
@@ -149,18 +168,21 @@ export class Vector {
     return this;
   }
 
-  //r: V with minlen < len < maxlen
+  // shortcut for .min().max()
+  // Number, Number => this
   clampLen(minLen, maxLen) {
     this.min(minLen).max(maxLen);
     return this;
   }
 
-  //r: a Vector that looks from V to vec
+  // Vector => Vector
+  // Vector that points to vec from this
   vectorTo(vec) {
     return vec.re().sub(this);
   }
 
-  //r: distance from V to vec
+  // Vector => Number
+  // distance from V to vec
   distanceTo(vec) {
     return this.vectorTo(vec).len();
   }
