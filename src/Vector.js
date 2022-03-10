@@ -22,9 +22,9 @@ export class Vector {
     return this;
   }
 
-  // subtrac vec
+  // subtract vec
   // Vector => this
-  sub(vec = 0) {
+  subtract(vec = 0) {
     this.x -= vec.x;
     this.y -= vec.y;
     return this;
@@ -32,7 +32,7 @@ export class Vector {
 
   // multiply with num
   // Number => this
-  mul(num = 1) {
+  multiply(num = 1) {
     this.x *= num;
     this.y *= num;
     return this;
@@ -40,7 +40,7 @@ export class Vector {
 
   // divide by num
   // Number => this
-  div(num = 1) {
+  divide(num = 1) {
     this.x /= num;
     this.y /= num;
     return this;
@@ -48,22 +48,25 @@ export class Vector {
 
   // => Number
   // length or magnitude
-  len() {
+  get length() {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
   }
 
   // => Number
   // length square
-  lensq() {
+  lengthSquare() {
     return Math.pow(this.x, 2) + Math.pow(this.y, 2);
   }
 
   // set length to 1
   // => this
-  norm() {
+  normalize() {
     if (!this.len()) return this; //0 Vector
     this.div(this.len());
     return this;
+  }
+  get normalized(){
+    return this.normalize(...arguments)
   }
 
   // Vector => Number
@@ -80,33 +83,32 @@ export class Vector {
 
   // Vector => Vector
   //projection onto vec
-  projectTo(vec) {
-    return vec.re().norm().mul(this.dot(vec.norm()));
+  project(vec) {
+    return vec.re().normalize().multiply(this.dot(vec.normalize()));
   }
 
   // => Number
   // angle in radians
-  angle() {
+  get angle() {
     return Math.atan2(this.y, this.x);
   }
 
   // set angle to given angle in radians
   // Number => this
-  setAngle(angle) {
+  set angle(angle) {
     let l = this.len();
-    let a = angle || this.angle();
-    this.x = Math.cos(a) * l;
-    this.y = Math.sin(a) * l;
+    this.x = Math.cos(angle) * l;
+    this.y = Math.sin(angle) * l;
     return this;
   }
 
   // rotate this by given angle
   // Number => this
-  rotate(angle = 0) {
-    let l = this.len();
-    let a = this.angle();
-    this.x = Math.cos(angle + a) * l;
-    this.y = Math.sin(angle + a) * l;
+  rotate(rotation = 0) {
+    let length = this.length;
+    let angle = this.angle;
+    this.x = Math.cos(angle + rotation) * length;
+    this.y = Math.sin(angle + rotation) * length;
     return this;
   }
 
@@ -120,29 +122,28 @@ export class Vector {
     return this;
   }
 
-  // set minimum length to minlen
+  // set minimum length to minLength
   // Number => this
-  min(minlen) {
-    minlen = minlen || this.len();
-    if (this.len() < minlen) {
-      return this.norm().mul(minlen);
+  min(minLength) {
+    if (this.length < minLength) {
+      return this.normalize().multiply(minLength);
     }
     return this;
   }
 
-  // set maximum length to minlen
+  // set maximum length to maxLength
   // Number => this
-  max(maxlen) {
-    if (this.len() > maxlen) {
-      return this.norm().mul(maxlen);
+  max(maxLength) {
+    if (this.length > maxLength) {
+      return this.normalize().multiply(maxLength);
     }
     return this;
   }
 
   // set length to newLen
   // Number => this
-  setLen(newLen) {
-    this.min(newLen).max(newLen);
+  set length(newLength) {
+    this.min(newLength).max(newLength);
     return this;
   }
 
@@ -168,17 +169,10 @@ export class Vector {
     return this;
   }
 
-  // shortcut for .min().max()
-  // Number, Number => this
-  clampLen(minLen, maxLen) {
-    this.min(minLen).max(maxLen);
-    return this;
-  }
-
   // Vector => Vector
   // Vector that points to vec from this
   vectorTo(vec) {
-    return vec.re().sub(this);
+    return vec.re().subtract(this);
   }
 
   // Vector => Number
