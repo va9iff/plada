@@ -8,12 +8,13 @@ export class Vector {
   // V = a new Vector that is equal to "this"
   // r = return value
 
-  //r: V; reconstructs the new vector from "this"
+  // reconstructs the new vector from "this"
+  // => Vector
   re() {
     return new Vector(this.x, this.y);
   }
 
-  //r: V added vec
+  // => Vector
   add(vec = 0) {
     this.x += vec.x;
     this.y += vec.y;
@@ -156,7 +157,7 @@ export class Vector {
 
   //r: a Vector that looks from V to vec
   vectorTo(vec) {
-    return vec.sub(this);
+    return vec.re().sub(this);
   }
 
   //r: distance from V to vec

@@ -7,8 +7,10 @@ import { Vector } from "./Vector.js"
 import { Kinematic } from "./Kinematic.js"
 import { Visual } from "./Visual.js"
 
-window.k = new Visual()
+window.k = new Body()
+let b = new Body()
+b.position.x = 140
 k.velocity.x = 0.03
-k.frame = (d)=> d>20 ? console.log(d):null
+k.frame = (d)=> console.log(k.isColliding(b))
 
 window.Point = Point
