@@ -6,22 +6,58 @@ import { Visual } from "./Visual.js"
 // as the collision will fire .parent's collision too, it's recursive by nature.
 
 export class Body extends Visual {
-	listenings = []
+	constructor(){
+		super(...arguments)
+		this.listenings = []
+	}
 
 
-	addCollision(body, collideHandler=(self, body)=>{}, id=null) {
+	// underdevelopment
+	// static C2Ccolls = []
+	// static get collide() {
+	// 	let that = this
+	// 	let prox = new Proxy(
+	// 		{},
+	// 		{
+	// 			// a.collide.b = ()=>{}
+	// 			// a.collide.b.end = ()=>{}
+
+	// 			get: function(target, property, receiver){
+	// 				let controller = {}
+	// 				controller.cls = property
+	// 				that.C2Ccolls.push(controller)
+	// 				return controller
+	// 			},
+	// 			set: function(target, property, value, receiver) {
+	// 				if (target.cls){
+	// 					// for extra collisions
+	// 					// property = ["end"||"start"||...]
+	// 					target[property] = value
+	// 					that.C2Ccolls.push(target)
+	// 					return target
+	// 				}
+	// 				target.cls = property
+	// 				target.during = value
+	// 				that.C2Ccolls.push(target)
+	// 				// return target
+	// 			},
+	// 		}
+	// 	)
+	// 	return prox
+	// }
+
+
+
+	addCollision(body, collideFun=(self, body)=>{}, collType = "during") {
 		let listening = {
 			body: body,
-			collideHandler: collideHandler,
-			id: id
+			wasColliding: false,
+			start: ()=>{},
+			end: ()=>{},
+			during: ()=>{}
 		}
+		listening[collType] = collideFun
 		this.listenings.push(listening)
-	}
-	removeCollision(id){
-		this.listenings = this.listenings.filter(listening=>listening.id!=id)
-	}
-	clearCollisions(){
-		this.listenings = []
 	}
 
 	isColliding(body) {
@@ -33,7 +69,7 @@ export class Body extends Visual {
 		// console.log(this.listenings)
 		for (let listening of this.listenings) {
 			// console.log(this.listenings[body])
-			if (this.isColliding(listening.body)) listening.collideHandler(this, listening.body)
+			if (this.isColliding(listening.body)) listening.during(this, listening.body)
 		}
 	}
 	devFrame(delta) {

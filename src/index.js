@@ -14,7 +14,7 @@ r.x = 150
 b.position.x = 100
 k.velocity.x = 0.02
 // k.frame = (d)=> console.log(k.isColliding(b))
-k.addCollision(b,()=>console.log('afsdjf'),"prr")
+k.addCollision(b,()=>console.log('afsdjf'), "during")
 k.addCollision(r,()=>console.log('r'))
 
 k.position.x = -50
