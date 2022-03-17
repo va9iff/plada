@@ -6,7 +6,7 @@ import { Visual } from "./Visual.js"
 // it will fire .parents' .collision() on its own collision.
 // as the collision will fire .parent's collision too, it's recursive by nature.
 
-export class Body extends Visual {
+class Body extends Visual {
 	constructor() {
 		super(...arguments)
 		this.listenings = []
@@ -127,3 +127,5 @@ Use it on Body instance, pass target Body instance.`)
 	// obj-to-obj collision binding control object
 	// get collide(){}
 }
+
+export {Body}

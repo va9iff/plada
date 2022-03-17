@@ -1,6 +1,6 @@
 import { Kinematic } from "./Kinematic.js"
 
-export class Visual extends Kinematic {
+class Visual extends Kinematic {
 	radius = 30
 	color = ""
 	text = ""
@@ -70,3 +70,5 @@ export class Visual extends Kinematic {
 // }
 // `
 // document.body.appendChild(style)
+
+export {Visual}

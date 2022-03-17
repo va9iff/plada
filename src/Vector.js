@@ -1,4 +1,4 @@
-export class Vector {
+class Vector {
 	// takes x and y. if aren't passed, take as 0
 	constructor(x, y) {
 		this.x = x || 0
@@ -182,3 +182,5 @@ export class Vector {
 	}
 }
 // import { Vector } from "./vector.js";
+
+export {Vector}

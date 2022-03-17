@@ -1,7 +1,7 @@
 import { Vector } from "./Vector.js"
 import { Looper } from "./core.js"
 
-export class Point extends Looper {
+class Point extends Looper {
 	origin = null
 	// position = new Vector()
 	// _absolute = new Vector()
@@ -34,3 +34,6 @@ export class Point extends Looper {
 	// super.devFrame()
 	// }
 }
+
+
+export {Point}

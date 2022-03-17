@@ -1,4 +1,4 @@
-export class MainLoop {
+class MainLoop {
 
 	//// loops
 	oldStamp = 0 // timestamp to calculate delta
@@ -50,7 +50,7 @@ export class MainLoop {
 
 let main = new MainLoop()
 
-export class Looper {
+class Looper {
 	// init
 	static Loop = main //default loop
 	static objects 	= []
@@ -131,3 +131,6 @@ export class Looper {
 main.start()
 
 // document.onclick = ()=>document.body.innerHTML = totalLoopes
+
+
+export {MainLoop, Looper}

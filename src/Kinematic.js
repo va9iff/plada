@@ -1,7 +1,7 @@
 import { Vector } from "./Vector.js"
 import { Point } from "./Point.js"
 
-export class Kinematic extends Point {
+class Kinematic extends Point {
 	// velocity = new Vector(1,1)
 
 	constructor() {
@@ -16,3 +16,6 @@ export class Kinematic extends Point {
 		this.physicsFix()
 	}
 }
+
+
+export {Kinematic}
