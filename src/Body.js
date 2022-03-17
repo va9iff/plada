@@ -12,6 +12,7 @@ export class Body extends Visual {
 	constructor() {
 		super(...arguments)
 		this.listenings = []
+		this.wasCollidings = [] // for c2c
 	}
 
 	static c2c = []
@@ -23,6 +24,7 @@ export class Body extends Visual {
 		return this.c2c.filter(e => e.cls == cls)[0]
 	}
 	static collide(cls) {
+		console.log("cls",cls.name)
 		let c2cListener = this.hasThisClassListener(cls)
 			? this.alreadyExistingListener()
 			: {
@@ -52,33 +54,53 @@ export class Body extends Visual {
 			this.position.vectorTo(body.position).length < this.radius + body.radius
 		)
 	}
+	runCollision(listening) {
+		// console.log(this.listenings[body])
+		if (!listening.wasColliding && this.isColliding(listening.body)) {
+			listening.start(this, listening.body)
+			listening.wasColliding = true
+		}
+		if (this.isColliding(listening.body)) {
+			listening.during(this, listening.body)
+			listening.wasColliding = true
+		}
+		if (listening.wasColliding && !this.isColliding(listening.body)) {
+			listening.end(this, listening.body)
+			listening.wasColliding = false
+		}
+	}
 	runCollisions() {
 		// console.log(this.listenings)
 		for (let listening of this.listenings) {
-			// console.log(this.listenings[body])
-			if (!listening.wasColliding && this.isColliding(listening.body)) 
-				{
-					listening.start(this, listening.body)
-					listening.wasColliding = true
-				}
-			if (this.isColliding(listening.body))
-				{
-					listening.during(this, listening.body)
-					listening.wasColliding = true
-				}
-			if (listening.wasColliding && !this.isColliding(listening.body)) 
-				{
-					listening.end(this, listening.body)
-					listening.wasColliding = false
-				}
+			this.runCollision(listening)
 		}
 	}
-	static runClassLevelCollisions(){
-		for(let listening of this.c2c){}
+
+	runClassLevelCollision(body,listeningC){
+		if (this.isColliding(body)){
+			listeningC.during(this,body)
+		}
+		
+		// if(!this.isColliding(body)) this.wasColliding = this.wasColliding.map(b=>b!=body)
+		// if (!this.wasColliding.some((b)=>b==body)) {
+		// this.wasColliding.push(body)
+	}
+	static runClassLevelCollisions() {
+		for (let listeningC of this.c2c){
+			for(let selfObj of this.objects){
+				for(let otherObj of listeningC.cls.objects){
+					selfObj.runClassLevelCollision(otherObj, listeningC)
+				}
+			}
+		}
 	}
 	devFrame(delta) {
 		super.devFrame(delta)
 		this.runCollisions()
+	}
+	static frame() {
+		super.frame()
+		this.runClassLevelCollisions()
 	}
 	// obj-to-obj collision binding control object
 	// get collide(){}

@@ -3,7 +3,7 @@ import { Kinematic } from "./Kinematic.js"
 export class Visual extends Kinematic {
 	radius = 30
 	color = ""
-	text = "~"
+	text = ""
 
 	constructor() {
 		super()

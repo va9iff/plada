@@ -66,17 +66,27 @@ export class Looper {
 	}
 
 	//// ready
-	static isReady = false
+	static theClass = Looper
+	static isReady(){
+		return this.theClass == this
+	}
 	static ready() {
+		this.reAssignments()
 		this.announceAsLooper()
-		this.constructor.isReady = true
+		this.theClass = this
 	}
 	static announceAsLooper() {
 		this.Loop.Loopers.push(this)
 	}
 	static checkReady() {
-		!this.isReady ? this.ready() : null
+		!this.isReady() ? this.ready() : null
 	}
+	static reAssignments() {
+		this.inQueues = []
+		this.c2c = [] // for Body
+		this.objects = []
+	}
+
 
 	//// frame
 	frameWrapper() {
@@ -116,21 +126,6 @@ export class Looper {
 	}
 
 	//// extras
-	static reAssignments() {
-		// when working with child classes,
-		// we want them to have their own
-		// variants of these properties.
-		// so we reAssign them, as
-		// this.p is child's attr
-		// and =this.p will look
-		// up to the parent.
-		// will go to parent,
-		this.Loop = this.Loop
-		this.isReady = this.isReady
-		this.objects = this.objects
-		this.inQueues = this.inQueues
-		// probably do in .onReady()
-	}
 }
 
 main.start()
