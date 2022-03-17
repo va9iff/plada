@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Frame</title>
+		<link rel="stylesheet" href="../../src/style.css" />
+	</head>
+	<body>
+		<script src="../../src/import.js" type="module"></script>
+		<script type="module">
+
+
+			class A extends Body{
+				color = 'red'
+			}
+
+			class B extends Body{
+				color = 'blue'
+			}
+
+			new A().position = new Vector(80,80)
+			new A().position = new Vector(160,80)
+			new A().position = new Vector(200,80)
+
+
+			new B().position = new Vector(80,200)
+			new B().position = new Vector(160,200)
+			new B().position = new Vector(200,200)
+
+			window.k = new A()
+
+			k.velocity = new Vector(0.1,0.1)
+			k.life = 0
+
+			k.frame = (k)=>{
+				k.life++
+				k.nearest(A).text = k.life
+				k.nearest(B).text = "bu"+k.life
+			}
+
+
+
+
+		</script>
+	</body>
+</html>

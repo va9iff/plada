@@ -10,6 +10,13 @@ export class Point extends Looper {
 		super(...arguments)
 		this.position = new Vector(x, y)
 	}
+	nearest(cls){
+		let theNearest = cls.objects[0]
+		for (let obj of cls.objects){
+			if(this.position.vectorTo(obj.position).length < this.position.vectorTo(theNearest.position).length && obj!=this) theNearest = obj
+		}
+	return theNearest
+	}
 	set absolute(value) {
 		console.log("you should not set absolute value")
 	}
