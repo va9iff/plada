@@ -14,9 +14,14 @@ r.x = 150
 b.position.x = 100
 k.velocity.x = 0.02
 // k.frame = (d)=> console.log(k.isColliding(b))
-k.addCollision(b,()=>console.log('afsdjf'), "during")
-k.addCollision(r,()=>console.log('r'))
+// k.addCollision(b,()=>console.log('afsdjf'), "during")
+// k.addCollision(r,()=>console.log('r'))
+
+Body.collide[Body] = ()=>{}
 
 k.position.x = -50
+
+console.log(k)
+console.log(Body)
 
 window.Point = Point

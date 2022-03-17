@@ -5,6 +5,9 @@ import { Visual } from "./Visual.js"
 // it will fire .parents' .collision() on its own collision.
 // as the collision will fire .parent's collision too, it's recursive by nature.
 
+	// A.collide(B) = ()=>{}
+	// A.collide(B).end = ()=>{}
+
 export class Body extends Visual {
 	constructor(){
 		super(...arguments)
@@ -12,40 +15,19 @@ export class Body extends Visual {
 	}
 
 
-	// underdevelopment
-	// static C2Ccolls = []
-	// static get collide() {
-	// 	let that = this
-	// 	let prox = new Proxy(
-	// 		{},
-	// 		{
-	// 			// a.collide.b = ()=>{}
-	// 			// a.collide.b.end = ()=>{}
-
-	// 			get: function(target, property, receiver){
-	// 				let controller = {}
-	// 				controller.cls = property
-	// 				that.C2Ccolls.push(controller)
-	// 				return controller
-	// 			},
-	// 			set: function(target, property, value, receiver) {
-	// 				if (target.cls){
-	// 					// for extra collisions
-	// 					// property = ["end"||"start"||...]
-	// 					target[property] = value
-	// 					that.C2Ccolls.push(target)
-	// 					return target
-	// 				}
-	// 				target.cls = property
-	// 				target.during = value
-	// 				that.C2Ccolls.push(target)
-	// 				// return target
-	// 			},
-	// 		}
-	// 	)
-	// 	return prox
-	// }
-
+	static c2cbasic = [Body]
+	static hasThisClassListener(cls){
+		console.log(this.c2cbasic.some((l)=>l==cls))
+		// return console.log()
+	}
+	static collide(cls){
+		// if (){}
+		let c2cListener = !
+		{
+			cls: cls
+		}
+		this.c2cbasic.push()
+	}
 
 
 	addCollision(body, collideFun=(self, body)=>{}, collType = "during") {
@@ -79,3 +61,6 @@ export class Body extends Visual {
 	// obj-to-obj collision binding control object
 	// get collide(){}
 }
+
+
+Body.hasThisClassListener(Body)
