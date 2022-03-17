@@ -49,6 +49,18 @@ export class Body extends Visual {
 		this.listenings.push(listening)
 	}
 
+	collide(body){
+	let listening = {
+		body: body,
+		wasColliding: false,
+		start: () => {},
+		end: () => {},
+		during: () => {},
+	}
+	this.listenings.push(listening)
+	return listening
+	}
+
 	isColliding(body) {
 		return (
 			this.position.vectorTo(body.position).length < this.radius + body.radius
@@ -80,7 +92,7 @@ export class Body extends Visual {
 		if (this.isColliding(body)){
 			listeningC.during(this,body)
 		}
-		
+
 		// if(!this.isColliding(body)) this.wasColliding = this.wasColliding.map(b=>b!=body)
 		// if (!this.wasColliding.some((b)=>b==body)) {
 		// this.wasColliding.push(body)

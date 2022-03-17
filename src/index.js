@@ -41,6 +41,10 @@ Body.collide(SBody).during = (body,sbody)=>{
 	console.log(body.constructor.name, sbody.constructor.name)
 }
 
+k.collide(b).during = ()=> {
+	console.log(999)
+}
+
 window.Body=Body
 
 // console.log(Body.c2c)
