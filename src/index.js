@@ -15,7 +15,8 @@ class SBody extends Body{
 	color = "cyan"
 }
 
-new SBody().position.x = 300
+window.s = new SBody()
+s.position.x = 300
 
 window.k = new Body()
 window.b = new NBody()
@@ -31,8 +32,12 @@ Body.collide(NBody).during = (s,o)=>{
 	console.log(s.constructor.name, o.constructor.name)
 }
 
-Body.collide(NBody).during = (body,sbody)=>{
-	console.log(body.constructor.name, "sbod but overwritten")
+Body.collide(NBody).during = (body,nbody)=>{
+	console.log(body.constructor.name, "nbod but overwritten")
+}
+
+Body.collide(SBody).during = (body,sbody)=>{
+	console.log(body.constructor.name, "susuuuu")
 }
 
 k.collide(b).start = ()=> console.log(999)

@@ -1,12 +1,10 @@
 import { Visual } from "./Visual.js"
 
+// Todo: .parent property
 // .parent is much like .origin.
 // instead of adding up the .origins' position recursively,
 // it will fire .parents' .collision() on its own collision.
 // as the collision will fire .parent's collision too, it's recursive by nature.
-
-// A.collide(B) = ()=>{}
-// A.collide(B).end = ()=>{}
 
 export class Body extends Visual {
 	constructor() {
@@ -21,44 +19,45 @@ export class Body extends Visual {
 		// return console.log()
 	}
 	static alreadyExistingListener(cls) {
-		return this.c2c.filter(l=>l.cls==cls)[0]
+		return this.c2c.filter(l => l.cls == cls)[0]
 	}
 	static collide(cls) {
-		console.log("cls",cls.name)
 		let c2cListener = this.hasThisClassListener(cls)
 			? this.alreadyExistingListener(cls)
 			: {
 					cls: cls,
 					// start: () => {},
 					// end: () => {},
-					during: () => {},
+					during: (thisBody,targetBody) => {},
 			  }
 		this.c2c.push(c2cListener)
 		return c2cListener
 	}
 
-	addCollision(body, collideFun = (self, body) => {}, collType = "during") {
+	// old way by passing function as argument
+	// addCollision(body, collideFun = (self, body) => {}, collType = "during") {
+		// let listening = {
+			// body: body,
+			// wasColliding: false,
+			// start: () => {},
+			// end: () => {},
+			// during: () => {},
+		// }
+		// listening[collType] = collideFun
+		// this.listenings.push(listening)
+	// }
+
+	// new way passing only object then setting the function according attribute
+	collide(body) {
 		let listening = {
 			body: body,
 			wasColliding: false,
-			start: () => {},
-			end: () => {},
-			during: () => {},
+			start: (thisBody, targetBody) => {},
+			end: (thisBody, targetBody) => {},
+			during: (thisBody, targetBody) => {},
 		}
-		listening[collType] = collideFun
 		this.listenings.push(listening)
-	}
-
-	collide(body){
-	let listening = {
-		body: body,
-		wasColliding: false,
-		start: () => {},
-		end: () => {},
-		during: () => {},
-	}
-	this.listenings.push(listening)
-	return listening
+		return listening
 	}
 
 	isColliding(body) {
@@ -66,6 +65,7 @@ export class Body extends Visual {
 			this.position.vectorTo(body.position).length < this.radius + body.radius
 		)
 	}
+	// for running o2o collisions
 	runCollision(listening) {
 		// console.log(this.listenings[body])
 		if (!listening.wasColliding && this.isColliding(listening.body)) {
@@ -81,31 +81,32 @@ export class Body extends Visual {
 			listening.wasColliding = false
 		}
 	}
+	// call runCollision for every object of the class
 	runCollisions() {
-		// console.log(this.listenings)
 		for (let listening of this.listenings) {
 			this.runCollision(listening)
 		}
 	}
 
-	runClassLevelCollision(body,listeningC){
-		if (listeningC.start || listeningC.end) console.error(
-			`Classes doesn't provide collision start or end. 
-			They don't keep track of their object's realtion with other classes' objects. 
-			So they can't tell if they were colliding last frame.`)
-			// yet. we may get around this by tracking last collideds in an array.
-		if (this.isColliding(body)){
-			listeningC.during(this,body)
+	runClassLevelCollision(body, listeningC) {
+		if (listeningC.start || listeningC.end) {
+			console.error(`
+Classes doesn't support collision start or end. 
+They don't keep track of their object's realtion with other classes' objects. 
+So they can't tell if they were colliding last frame.
+Use it on Body instance, pass target Body instance.`)
+		// yet. we may get around this by tracking last collideds in an array.
+			listeningC.start = null
+			listeningC.end = null
 		}
-
-		// if(!this.isColliding(body)) this.wasColliding = this.wasColliding.map(b=>b!=body)
-		// if (!this.wasColliding.some((b)=>b==body)) {
-		// this.wasColliding.push(body)
+		if (this.isColliding(body)) {
+			listeningC.during(this, body)
+		}
 	}
 	static runClassLevelCollisions() {
-		for (let listeningC of this.c2c){
-			for(let selfObj of this.objects){
-				for(let otherObj of listeningC.cls.objects){
+		for (let listeningC of this.c2c) {
+			for (let selfObj of this.objects) {
+				for (let otherObj of listeningC.cls.objects) {
 					selfObj.runClassLevelCollision(otherObj, listeningC)
 				}
 			}
@@ -114,6 +115,10 @@ export class Body extends Visual {
 	devFrame(delta) {
 		super.devFrame(delta)
 		this.runCollisions()
+	}
+	static reAssignments(){
+		super.reAssignments()
+		this.c2c = [] // for Body
 	}
 	static frame() {
 		super.frame()

@@ -83,7 +83,6 @@ export class Looper {
 	}
 	static reAssignments() {
 		this.inQueues = []
-		this.c2c = [] // for Body
 		this.objects = []
 	}
 
