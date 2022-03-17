@@ -1,3 +1,4 @@
+
 class Vector {
 	// takes x and y. if aren't passed, take as 0
 	constructor(x, y) {
@@ -181,7 +182,6 @@ class Vector {
 		return this.vectorTo(vec).len()
 	}
 }
-// import { Vector } from "./vector.js";
 
 
 class MainLoop {
@@ -318,6 +318,8 @@ main.start()
 
 // document.onclick = ()=>document.body.innerHTML = totalLoopes
 
+
+
 class Point extends Looper {
 	origin = null
 	// position = new Vector()
@@ -352,6 +354,8 @@ class Point extends Looper {
 	// }
 }
 
+
+
 class Kinematic extends Point {
 	// velocity = new Vector(1,1)
 
@@ -369,10 +373,12 @@ class Kinematic extends Point {
 }
 
 
+
 class Visual extends Kinematic {
 	radius = 30
 	color = ""
 	text = ""
+	teleport = false
 
 	constructor() {
 		super()
@@ -392,12 +398,52 @@ class Visual extends Kinematic {
 
 		this.element.innerHTML = this.text
 	}
+	teleportCheck(){
+		if (this.teleport) this.teleportDo()
+	}
+	teleportDo(){
+		let width = this.element.parentElement.getBoundingClientRect().width
+		let height = this.element.parentElement.getBoundingClientRect().height
+		if(this.position.x<0) this.position.x = width
+		if(this.position.x>width) this.position.x = 0
+
+		if(this.position.y<0) this.position.y = height
+		if(this.position.y>height) this.position.y = 0
+	}
 	devFrame(self) {
 		super.devFrame()
 		this.visualFix()
+		this.teleportCheck()
 	}
 }
 
+
+// !!! maybe push it to body instead of linking with another tag for its css :) ?
+// its css is so small, siomple and non-changing at base.
+// let style = document.createElement("style")
+// style.innerHTML = `.Looper {
+	// position: absolute;
+	// text-align: center;
+	// border-radius: 50%;
+	// background-color: #ff3333;
+	// opacity: 0.8;
+// 
+	// /*
+		// set by Plada 
+		// top, left, width, height
+	// */
+// 
+	// /*
+		// optional
+		// background-color
+	// */
+// }
+// 
+// .Visual {
+	// /*background-color: blue;*/
+// }
+// `
+// document.body.appendChild(style)
 
 
 // Todo: .parent property
@@ -528,8 +574,6 @@ Use it on Body instance, pass target Body instance.`)
 	// get collide(){}
 }
 
-
-
 let style = document.createElement("style")
 style.innerHTML = `.Looper {
 	position: absolute;
@@ -554,3 +598,4 @@ style.innerHTML = `.Looper {
 }
 `
 document.body.appendChild(style)
+

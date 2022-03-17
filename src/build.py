@@ -23,5 +23,5 @@ for line in merged.split('\n'):
 	if not any(bad_word in line for bad_word in bad_words):
 		finalized+=line+'\n'
 
-with open("output.js",'w') as output:
+with open("../onefile/Plada.js",'w') as output:
 	output.write(finalized)
