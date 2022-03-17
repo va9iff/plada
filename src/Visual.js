@@ -4,6 +4,7 @@ export class Visual extends Kinematic {
 	radius = 30
 	color = ""
 	text = ""
+	teleport = false
 
 	constructor() {
 		super()
@@ -23,9 +24,22 @@ export class Visual extends Kinematic {
 
 		this.element.innerHTML = this.text
 	}
+	teleportCheck(){
+		if (this.teleport) this.teleportDo()
+	}
+	teleportDo(){
+		let width = this.element.parentElement.getBoundingClientRect().width
+		let height = this.element.parentElement.getBoundingClientRect().height
+		if(this.position.x<0) this.position.x = width
+		if(this.position.x>width) this.position.x = 0
+
+		if(this.position.y<0) this.position.y = height
+		if(this.position.y>height) this.position.y = 0
+	}
 	devFrame(self) {
 		super.devFrame()
 		this.visualFix()
+		this.teleportCheck()
 	}
 }
 
