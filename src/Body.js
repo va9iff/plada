@@ -21,16 +21,16 @@ export class Body extends Visual {
 		// return console.log()
 	}
 	static alreadyExistingListener(cls) {
-		return this.c2c.filter(l=>l.cls==cls)[0].cls
+		return this.c2c.filter(l=>l.cls==cls)[0]
 	}
 	static collide(cls) {
 		console.log("cls",cls.name)
 		let c2cListener = this.hasThisClassListener(cls)
-			? this.alreadyExistingListener()
+			? this.alreadyExistingListener(cls)
 			: {
 					cls: cls,
-					start: () => {},
-					end: () => {},
+					// start: () => {},
+					// end: () => {},
 					during: () => {},
 			  }
 		this.c2c.push(c2cListener)
@@ -89,6 +89,11 @@ export class Body extends Visual {
 	}
 
 	runClassLevelCollision(body,listeningC){
+		if (listeningC.start || listeningC.end) console.error(
+			`Classes doesn't provide collision start or end. 
+			They don't keep track of their object's realtion with other classes' objects. 
+			So they can't tell if they were colliding last frame.`)
+			// yet. we may get around this by tracking last collideds in an array.
 		if (this.isColliding(body)){
 			listeningC.during(this,body)
 		}

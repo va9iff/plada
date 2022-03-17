@@ -31,7 +31,7 @@ Body.collide(NBody).during = (s,o)=>{
 	console.log(s.constructor.name, o.constructor.name)
 }
 
-Body.collide(SBody).during = (body,sbody)=>{
+Body.collide(NBody).during = (body,sbody)=>{
 	console.log(body.constructor.name, "sbod but overwritten")
 }
 
