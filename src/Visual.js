@@ -23,8 +23,8 @@ export class Visual extends Kinematic {
 
 		this.element.innerHTML = this.text
 	}
-	devFrame(delta) {
-		super.devFrame(delta)
+	devFrame(self) {
+		super.devFrame()
 		this.visualFix()
 	}
 }

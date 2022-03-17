@@ -89,12 +89,13 @@ export class Looper {
 
 	//// frame
 	frameWrapper() {
-		const delta = this.constructor.Loop.lastDelta
-		this.devFrame(delta)
-		this.frame(delta)
+		// const delta = this.constructor.Loop.lastDelta
+		window.delta = this.constructor.Loop.lastDelta
+		this.devFrame(this)
+		this.frame(this)
 	}
-	frame(delta) {}
-	devFrame(delta) {}
+	frame(self) {}
+	devFrame(self) {}
 	static frame(){
 		this.runFrames()
 		this.accapetQueues()

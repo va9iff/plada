@@ -8,11 +8,11 @@ export class Kinematic extends Point {
 		super(...arguments)
 		this.velocity = new Vector()
 	}
-	physicsFix(delta) {
+	physicsFix() {
 		this.position.add(this.velocity.copy.multiply(delta))
 	}
-	devFrame(delta) {
-		super.devFrame(delta)
-		this.physicsFix(delta)
+	devFrame(self) {
+		super.devFrame()
+		this.physicsFix()
 	}
 }

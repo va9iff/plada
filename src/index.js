@@ -1,11 +1,6 @@
-import { MainLoop, Looper } from "./core.js"
-import { Point } from "./Point.js"
 import { Body } from "./Body.js"
-
 import { Vector } from "./Vector.js"
 
-import { Kinematic } from "./Kinematic.js"
-import { Visual } from "./Visual.js"
 
 class NBody extends Body{
 	color = "salmon"
@@ -25,8 +20,13 @@ window.b = new NBody()
 b.position.x = 100
 
 k.position.x = -50
-k.velocity.x = 0.02
-// k.frame = (d)=> console.log(k.isColliding(b))
+k.velocity.x = 0.03
+k.frame = (k) => {
+	k.velocity.multiply(1.01)
+}
+b.frame = function(){
+	this.velocity.add(new Vector(0.0007,0))
+}
 
 Body.collide(NBody).during = (s,o)=>{
 	console.log(s.constructor.name, o.constructor.name)
@@ -44,6 +44,4 @@ k.collide(b).start = ()=> console.log(999)
 k.collide(b).end = ()=> console.log(888)
 
 window.Body=Body
-window.Point = Point
-window.Body= Body
 window.NBody= NBody

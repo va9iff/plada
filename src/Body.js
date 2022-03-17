@@ -112,8 +112,8 @@ Use it on Body instance, pass target Body instance.`)
 			}
 		}
 	}
-	devFrame(delta) {
-		super.devFrame(delta)
+	devFrame(self) {
+		super.devFrame()
 		this.runCollisions()
 	}
 	static reAssignments(){

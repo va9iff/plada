@@ -22,7 +22,7 @@ export class Point extends Looper {
 		}
 		return this._absolute
 	}
-	// devFrame(delta) {
-	// super.devFrame(delta)
+	// devFrame(self) {
+	// super.devFrame()
 	// }
 }

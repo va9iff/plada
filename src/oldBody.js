@@ -32,8 +32,8 @@ export class Body extends Visual {
 			if (this.isColliding(listening.body)) listening.collideFun(this, listening.body)
 		}
 	}
-	devFrame(delta) {
-		super.devFrame(delta)
+	devFrame() {
+		super.devFrame()
 		this.runCollisions()
 	}
 	// obj-to-obj collision binding control object
