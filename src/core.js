@@ -1,14 +1,12 @@
-var totalLoopes = 0
-
 export class MainLoop {
-	isRunning = false
-	oldStamp = 0 // timestamp to calculate delta
-	Loopers = [] // to hold all the Looper classes
-	delay = 1000 // minimum delay to call next loop !!!not implemented!!!
 
+	//// loops
+	oldStamp = 0 // timestamp to calculate delta
+	isRunning = false
+	delay = 1000 // minimum delay to call next loop !!!not implemented!!!
 	lastDelta = 0
 	lastFps = 0
-	//// loops
+	Loopers = [] // to hold all the Looper classes
 	mainLoop(timeStamp) {
 		const delta = timeStamp - this.oldStamp
 		this.lastDelta = delta
@@ -53,10 +51,9 @@ export class MainLoop {
 let main = new MainLoop()
 
 export class Looper {
+	// init
 	static Loop = main //default loop
-	static isReady = false
-	static objects = []
-	static inQueues = []
+	static objects 	= []
 	constructor() {
 		this.constructor.checkReady()
 
@@ -69,6 +66,7 @@ export class Looper {
 	}
 
 	//// ready
+	static isReady = false
 	static ready() {
 		this.announceAsLooper()
 		this.constructor.isReady = true
@@ -81,14 +79,13 @@ export class Looper {
 	}
 
 	//// frame
-	frame(delta) {
-		totalLoopes += 1
-		// document.body.innerHTML = totalLoopes
-		//
-		// console.log(delta)
+	frameWrapper() {
+		const delta = this.constructor.Loop.lastDelta
+		this.devFrame(delta)
+		this.frame(delta)
 	}
+	frame(delta) {}
 	devFrame(delta) {}
-	
 	static frame(){
 		this.runFrames()
 		this.accapetQueues()
@@ -100,19 +97,11 @@ export class Looper {
 	}
 
 	//// queues
+	static inQueues = []
 	appendToQueue() {
 		this.constructor.inQueues.push(this)
 	}
-	onQueueDone() {
-		// this.addToObjects()
-		// I don't want to wait 1 loop for this
-	}
-	frameWrapper() {
-		// console.log(this.constructor.Loop.lastDelta)
-		const delta = this.constructor.Loop.lastDelta
-		this.devFrame(delta)
-		this.frame(delta)
-	}
+	onQueueDone() {}
 	static doQueues() {
 		for (let looperInQueue of this.inQueues) {
 			looperInQueue.onQueueDone()
