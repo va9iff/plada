@@ -3,3 +3,6 @@ Looper
 		Kinematic
 			Visual
 				Body
+
+style.css is necessary to style elements loosly.
+maybe we can just write the style tag with onefile javascript bundle.
