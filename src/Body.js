@@ -21,7 +21,7 @@ export class Body extends Visual {
 		// return console.log()
 	}
 	static alreadyExistingListener(cls) {
-		return this.c2c.filter(e => e.cls == cls)[0]
+		return this.c2c.filter(l=>l.cls==cls)[0].cls
 	}
 	static collide(cls) {
 		console.log("cls",cls.name)
