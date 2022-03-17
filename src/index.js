@@ -10,12 +10,19 @@ import { Visual } from "./Visual.js"
 class NBody extends Body{
 	// static objects = []
 	// static c2c = []
+	color = "salmon"
 }
 // NBody.reAssignments()
 
+class SBody extends Body{
+	color = "cyan"
+}
+
+new SBody().position.x = 300
+
 window.k = new Body()
 window.b = new NBody()
-let r = new Body()
+// let r = new Body()
 // r.x = 150
 b.position.x = 100
 k.velocity.x = 0.02
@@ -28,6 +35,10 @@ window.p = {}
 
 Body.collide(NBody).during = (s,o)=>{
 	console.log(s.constructor.name, o.constructor.name)
+}
+
+Body.collide(SBody).during = (body,sbody)=>{
+	console.log(body.constructor.name, sbody.constructor.name)
 }
 
 window.Body=Body
