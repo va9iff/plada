@@ -8,6 +8,7 @@ export class MainLoop {
 
 	lastDelta = 0
 	lastFps = 0
+	//// loops
 	mainLoop(timeStamp) {
 		const delta = timeStamp - this.oldStamp
 		this.lastDelta = delta
@@ -21,32 +22,22 @@ export class MainLoop {
 	}
 	loop() {
 		this.runLoop()
-		this.accapetQueues()
-	}
-	accapetQueues() {
 		this.runQueues()
-		this.clearQueues()
-	}
-	runQueues() {
-		for (let Looper of this.Loopers) {
-			for (let looperInQueue of Looper.inQueues) {
-				looperInQueue.onQueueDone()
-			}
-		}
-	}
-	clearQueues() {
-		for (let Looper of this.Loopers) {
-			Looper.inQueues = []
-		}
 	}
 	runLoop() {
 		for (let Looper of this.Loopers) {
-			let loopers = Looper.objects
-			for (let looper of loopers) {
-				looper.frameWrapper()
-			}
+			Looper.frame()
 		}
 	}
+
+	//// queues
+	runQueues(){
+		for (let looper of this.Loopers){
+			looper.accapetQueues()
+		}
+	}
+
+	//// handlers
 	start() {
 		this.isRunning = true
 		window.requestAnimationFrame(tstamp => {
@@ -73,6 +64,11 @@ export class Looper {
 		// this.idx = arguments[0]
 		this.addToObjects()
 	}
+	addToObjects() {
+		this.constructor.objects.push(this)
+	}
+
+	//// ready
 	static ready() {
 		this.announceAsLooper()
 		this.constructor.isReady = true
@@ -83,6 +79,27 @@ export class Looper {
 	static checkReady() {
 		!this.isReady ? this.ready() : null
 	}
+
+	//// frame
+	frame(delta) {
+		totalLoopes += 1
+		// document.body.innerHTML = totalLoopes
+		//
+		// console.log(delta)
+	}
+	devFrame(delta) {}
+	
+	static frame(){
+		this.runFrames()
+		this.accapetQueues()
+	}
+	static runFrames(){
+		for (let looper of this.objects) {
+			looper.frameWrapper()
+		}
+	}
+
+	//// queues
 	appendToQueue() {
 		this.constructor.inQueues.push(this)
 	}
@@ -90,22 +107,26 @@ export class Looper {
 		// this.addToObjects()
 		// I don't want to wait 1 loop for this
 	}
-	addToObjects() {
-		this.constructor.objects.push(this)
-	}
-	devFrame(delta) {}
 	frameWrapper() {
 		// console.log(this.constructor.Loop.lastDelta)
 		const delta = this.constructor.Loop.lastDelta
 		this.devFrame(delta)
 		this.frame(delta)
 	}
-	frame(delta) {
-		totalLoopes += 1
-		// document.body.innerHTML = totalLoopes
-		//
-		// console.log(delta)
+	static doQueues() {
+		for (let looperInQueue of this.inQueues) {
+			looperInQueue.onQueueDone()
+		}
 	}
+	static clearQueues() {
+		this.inQueues = []
+	}
+	static accapetQueues() {
+		this.doQueues()
+		this.clearQueues()
+	}
+
+	//// extras
 	static reAssignments() {
 		// when working with child classes,
 		// we want them to have their own
