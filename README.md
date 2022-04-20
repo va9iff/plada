@@ -12,7 +12,7 @@ simplest always.
 #### ES6 Modules import
 ```js
 // TODO: include what other features you need
-import { Body, Vector } from "../../import.js"
+import { Body, Vector } from "https://raw.githubusercontent.com/va9iff/plada/main/import.js?token=GHSAT0AAAAAABOZ3A2YRROCPEUPCAR24DSYYS7QADA"
 ```
 
 ## Basics
@@ -54,9 +54,8 @@ do it on copy - `j.copy.add(i)`
 ### Here the avaliable methods  
 `this` refers to vector that the method is called on.
 
-| Method 				 | Description
-| ---:					 |												   :--- |
-|-------------------------------------------------------------------------------|
+| Method 						 | Description
+<!-- | ---:						 |										:--- | -->
 | `.add(vec)`					 | adds `vec` to `this`							|
 | `.subtract(vec)`				 | subtracts `vec` from `this`					|
 | `.multiply(num)`				 | multiplies this with `num`					|
