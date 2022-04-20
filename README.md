@@ -55,8 +55,7 @@ do it on copy - `j.copy.add(i)`
 `this` refers to vector that the method is called on.
 
 | Method 						 | Description									|
-<!-- | ---:						 |										:--- | -->
-|--------------------------------|----------------------------------------------|
+| ------------------------------ | -------------------------------------------- |
 | `.add(vec)`					 | adds `vec` to `this`							|
 | `.subtract(vec)`				 | subtracts `vec` from `this`					|
 | `.multiply(num)`				 | multiplies this with `num`					|
