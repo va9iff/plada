@@ -54,7 +54,7 @@ do it on copy - `j.copy.add(i)`
 ### Here the avaliable methods  
 `this` refers to vector that the method is called on.
 
-| Method 						 | Description
+| Method 						 | Description									|
 <!-- | ---:						 |										:--- | -->
 |--------------------------------|----------------------------------------------|
 | `.add(vec)`					 | adds `vec` to `this`							|
