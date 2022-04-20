@@ -56,6 +56,7 @@ do it on copy - `j.copy.add(i)`
 
 | Method 						 | Description
 <!-- | ---:						 |										:--- | -->
+|--------------------------------|----------------------------------------------|
 | `.add(vec)`					 | adds `vec` to `this`							|
 | `.subtract(vec)`				 | subtracts `vec` from `this`					|
 | `.multiply(num)`				 | multiplies this with `num`					|
