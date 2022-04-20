@@ -13,7 +13,9 @@ class Body extends Visual {
 		this.wasCollidings = [] // for c2c
 	}
 
-	static c2c = []
+	// static ready(){
+		// super.ready()
+	// }
 	static hasThisClassListener(cls) {
 		return this.c2c.some(l => l.cls == cls)
 		// return console.log()
@@ -22,6 +24,8 @@ class Body extends Visual {
 		return this.c2c.filter(l => l.cls == cls)[0]
 	}
 	static collide(cls) {
+		!this.isReady() ? this.ready() : null
+		
 		let c2cListener = this.hasThisClassListener(cls)
 			? this.alreadyExistingListener(cls)
 			: {

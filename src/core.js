@@ -1,3 +1,5 @@
+import { Plada } from "./controller.js"
+
 class MainLoop {
 
 	//// loops

@@ -9,7 +9,8 @@ class Kinematic extends Point {
 		this.velocity = new Vector()
 	}
 	physicsFix() {
-		this.position.add(this.velocity.copy.multiply(delta))
+		// devide 1000 to give meaningful speeds in intagers (also ms to s)
+		this.position.add(this.velocity.copy.multiply(delta/1000))
 	}
 	devFrame(self) {
 		super.devFrame()

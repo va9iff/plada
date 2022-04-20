@@ -29,15 +29,15 @@ b.frame = function(){
 }
 
 Body.collide(NBody).during = (s,o)=>{
-	// console.log(s.constructor.name, o.constructor.name)
+	console.log(s.constructor.name, o.constructor.name)
 }
 
 Body.collide(NBody).during = (body,nbody)=>{
-	// console.log(body.constructor.name, "nbod but overwritten")
+	console.log(body.constructor.name, "nbod but overwritten")
 }
 
 Body.collide(SBody).during = (body,sbody)=>{
-	// console.log(body.constructor.name, "susuuuu")
+	console.log(body.constructor.name, "susuuuu")
 }
 
 // k.collide(b).start = ()=> console.log(999)

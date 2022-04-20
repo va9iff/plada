@@ -183,4 +183,6 @@ class Vector {
 }
 // import { Vector } from "./vector.js";
 
-export {Vector}
+const v = (x,y) => new Vector(x,y)
+
+export {Vector, v}
