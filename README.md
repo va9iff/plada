@@ -72,7 +72,7 @@ b.collide(r).start = ()=> alert("collide started")
 ```
 
 ## additional features
-- relative positioning - `a` and `b` is a `Body`. If `a`'s origin is `b`, `a` 
+- relative positioning - `a` and `b` is a `Body`. If `a`'s `origin` is `b`, `a` 
 will be positioned relative to `b`.
 
 ## Vector
