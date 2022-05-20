@@ -1,3 +1,5 @@
-export class Plada{
-
+export const Plada = {
+	simple(){
+		
+	}
 }

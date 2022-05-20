@@ -1,4 +1,5 @@
-import { Body, v } from "../../import.js"
+import { Plada, Body, v } from "../../import.js"
+Plada.simple()
 
 class Blue extends Body{
 	color = "blue"

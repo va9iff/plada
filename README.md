@@ -11,8 +11,11 @@ simplest always.
 ## Getting started
 #### ES6 Modules import
 ```js
-import { Body, Vector } from "https://raw.githubusercontent.com/va9iff/plada/main/import.js"
+import { Plada, Body, Vector } from "https://raw.githubusercontent.com/va9iff/plada/main/import.js"
+Plada.simple()
 ```
+Plada is modular and there are a lots of ways to use it. Setup can vary 
+depending on your needs. The easiest and clean way is to use `Plada.simple()`.
 
 # Body
 ```js

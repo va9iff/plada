@@ -19,10 +19,10 @@ window.b = new NBody()
 
 b.position.x = 100
 
-k.position.x = -50
-k.velocity.x = 0.03
+k.position.x = -0
+k.velocity.x = 0.5
 k.frame = (k) => {
-	k.velocity.multiply(1.01)
+	k.velocity.multiply(1.08)
 }
 b.frame = function(){
 	this.velocity.add(new Vector(0.0007,0))

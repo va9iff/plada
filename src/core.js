@@ -1,4 +1,4 @@
-import { Plada } from "./controller.js"
+// import { Plada } from "./controller.js"
 
 class MainLoop {
 
@@ -50,11 +50,19 @@ class MainLoop {
 	}
 }
 
-let main = new MainLoop()
+export const Plada = {
+	main : new MainLoop(),
+	simple(){
+		this.main.start()
+	}
+}
+
+Plada.main.stop()
+
 
 class Looper {
 	// init
-	static Loop = main //default loop
+	static Loop = Plada.main //default loop
 	static objects 	= []
 	constructor() {
 		this.constructor.checkReady()
@@ -126,13 +134,9 @@ class Looper {
 		this.doQueues()
 		this.clearQueues()
 	}
-
-	//// extras
 }
 
-main.start()
-
-// document.onclick = ()=>document.body.innerHTML = totalLoopes
-
+Plada.main.start()
+Plada.main.stop()
 
 export {MainLoop, Looper}
