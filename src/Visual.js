@@ -27,7 +27,6 @@ class Visual extends Kinematic {
 	devFrame(self) {
 		super.devFrame()
 		this.visualFix()
-		this.teleportCheck()
 	}
 }
 
