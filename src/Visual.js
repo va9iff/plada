@@ -1,16 +1,17 @@
 import { Kinematic } from "./Kinematic.js"
+import { Plada } from "./controller.js"
 
 class Visual extends Kinematic {
 	radius = 30
 	color = ""
 	text = ""
-	teleport = false
+	// teleport = false
 
 	constructor() {
 		super()
 		this.element = document.createElement("div")
 		this.element.className = "Looper " + this.constructor.name
-		document.body.appendChild(this.element)
+		Plada.element.appendChild(this.element)
 	}
 	visualFix() {
 		this.element.style.left = `${this.position.x - this.radius}px`
