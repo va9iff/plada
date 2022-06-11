@@ -1,7 +1,8 @@
-export const Plada = {
-	simple(){
+// export const Plada = {
+// 	simple(){
 		
-	},
-	// ISN'T TESTED!!!
-	element: document.body
-}
+// 	},
+// 	element: document.body
+// }
+
+// we export plada from core already

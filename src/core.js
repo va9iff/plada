@@ -54,7 +54,9 @@ export const Plada = {
 	main : new MainLoop(),
 	simple(){
 		this.main.start()
-	}
+	},
+	element: document.body
+	
 }
 
 Plada.main.stop()

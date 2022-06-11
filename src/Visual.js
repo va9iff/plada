@@ -1,5 +1,5 @@
 import { Kinematic } from "./Kinematic.js"
-import { Plada } from "./controller.js"
+import { Plada } from "./core.js"
 
 class Visual extends Kinematic {
 	radius = 30

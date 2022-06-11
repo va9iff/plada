@@ -1,6 +1,6 @@
+import { Plada } from "./core.js"
 import { Body } from "./Body.js"
 import { Vector } from "./Vector.js"
-
 
 class NBody extends Body{
 	color = "salmon"
@@ -45,3 +45,10 @@ Body.collide(SBody).during = (body,sbody)=>{
 
 window.Body=Body
 window.NBody= NBody
+
+document.onclick = e =>{
+	k.velocity.add(new Vector(20,30))
+	console.log('jfoidsjij')
+}
+
+Plada.simple()
