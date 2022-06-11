@@ -3,5 +3,5 @@ export const Plada = {
 		
 	},
 	// ISN'T TESTED!!!
-	element = document.body
+	element: document.body
 }
