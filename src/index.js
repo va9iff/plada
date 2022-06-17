@@ -2,6 +2,11 @@ import { Plada } from "./core.js"
 import { Body } from "./Body.js"
 import { Vector } from "./Vector.js"
 
+console.log(Plada.element)
+Plada.simple(document.querySelector("#tel"))
+console.log(Plada.element)
+
+
 class NBody extends Body{
 	color = "salmon"
 }
@@ -51,4 +56,4 @@ document.onclick = e =>{
 	console.log('jfoidsjij')
 }
 
-Plada.simple()
+setTimeout(()=>Plada.main.stop(), 800)

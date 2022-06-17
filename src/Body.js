@@ -76,6 +76,8 @@ class Body extends Visual {
 			listening.start(this, listening.body)
 			listening.wasColliding = true
 		}
+
+		// during will also be fired on start and stop
 		if (this.isColliding(listening.body)) {
 			listening.during(this, listening.body)
 			listening.wasColliding = true

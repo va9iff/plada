@@ -52,11 +52,13 @@ class MainLoop {
 
 export const Plada = {
 	main : new MainLoop(),
-	simple(){
+	simple(plate =  document.body){
+		this.element = plate
+		this.element = plate
 		this.main.start()
 	},
 	element: document.body
-	
+
 }
 
 Plada.main.stop()
@@ -104,6 +106,7 @@ class Looper {
 	frameWrapper() {
 		// const delta = this.constructor.Loop.lastDelta
 		window.delta = this.constructor.Loop.lastDelta
+		console.log(this.listenings)
 		this.devFrame(this)
 		this.frame(this)
 	}
